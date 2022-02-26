@@ -10,4 +10,5 @@ public class SpringBoliderplateApplication {
         SpringApplication.run(SpringBoliderplateApplication.class, args);
     }
 
+
 }
