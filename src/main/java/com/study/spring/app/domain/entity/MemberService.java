@@ -18,13 +18,13 @@ public class MemberService {
     private final MemberRepository memberRepository;
     private static final MemberDTO DTO = new MemberDTO();
 
-    @Cacheable(cacheNames = "userData", key = "#id")
+    @Cacheable(cacheNames = "userData", key = "#root.target + '_' + #root.methodName + '_' + #id")
     public MemberDTO getDto(Long id) {
         log.info("============== 캐시 데이터가 존재 하지 않습니다 ======");
         return cacheMemberDTO(id);
     }
 
-    @CachePut(cacheNames = "userData" , key = "#id")
+    @CachePut(cacheNames = "userData" , key = "#root.target + '_' + #root.methodName + '_' + #id")
     public MemberDTO cacheMemberDTO(Long id) {
         log.info("======= 캐시 데이터 업데이트 ========");
 
@@ -32,7 +32,7 @@ public class MemberService {
         return new MemberDTO(member);
     }
 
-    @CacheEvict(cacheNames = "userData", key = "#id")
+    @CacheEvict(cacheNames = "userData", key = "#root.target + '_' + #root.methodName + '_' + #id")
     public boolean deleteCache(Long id) {
         log.info("========= 캐시 삭제 {} =======", id);
         return true;
